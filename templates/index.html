@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Love You ❤️</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      font-size: 4em;
+      animation: glow 2s infinite;
+    }
+    @keyframes glow {
+      0% { color: white; }
+      50% { color: hotpink; }
+      100% { color: white; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Love You ❤️</h1>
+  <script>
+    fetch('/log', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        screen: window.screen.width + "x" + window.screen.height,
+        lang: navigator.language,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      })
+    });
+  </script>
+</body>
+</html>
