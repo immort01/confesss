@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Love You ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      background: linear-gradient(135deg, #1a1a1a, #330033);
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
+    html, body {
       margin: 0;
       padding: 0;
+      background: linear-gradient(135deg, #1a1a1a, #330033);
+      font-family: 'Segoe UI', sans-serif;
       color: #fff;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
     }
 
     .container {
@@ -18,32 +21,34 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
+      height: 100vh;
+      padding: 10px;
     }
 
     h1 {
-      font-size: 5em;
+      font-size: 12vw;
       color: hotpink;
-      text-shadow: 0 0 20px #ff69b4;
-      animation: pulse 2s infinite;
+      text-shadow: 0 0 30px #ff69b4, 0 0 60px #ff69b4;
+      animation: pop-glow 2s infinite;
+      margin: 0;
     }
 
-    @keyframes pulse {
+    @keyframes pop-glow {
       0%, 100% { transform: scale(1); color: #fff; }
       50% { transform: scale(1.1); color: hotpink; }
     }
 
     button {
       margin-top: 30px;
-      padding: 15px 30px;
+      padding: 20px 40px;
       background: #ff69b4;
       border: none;
       color: white;
-      font-size: 1.2em;
-      border-radius: 30px;
-      cursor: pointer;
+      font-size: 1.3em;
+      border-radius: 50px;
       box-shadow: 0 0 20px #ff69b4;
+      cursor: pointer;
       transition: 0.3s ease;
     }
 
@@ -52,39 +57,40 @@
       transform: scale(1.05);
     }
 
-    .kiss {
+    .popup {
       position: absolute;
-      font-size: 30px;
-      animation: floatkiss 2s linear forwards;
+      font-size: 12vw;
+      animation: floatPop 2.5s ease-out forwards;
       pointer-events: none;
+      z-index: 10;
     }
 
-    @keyframes floatkiss {
+    @keyframes floatPop {
       0% {
         opacity: 1;
         transform: translateY(0) scale(1);
       }
       100% {
         opacity: 0;
-        transform: translateY(-200px) scale(1.5);
+        transform: translateY(-200px) scale(2);
       }
     }
 
     .heart {
       position: absolute;
+      font-size: 8vw;
       color: red;
-      font-size: 20px;
-      animation: floatheart 2.5s linear forwards;
+      animation: floatHeart 2.5s ease-out forwards;
     }
 
-    @keyframes floatheart {
+    @keyframes floatHeart {
       0% {
         opacity: 1;
         transform: translateY(0) scale(1);
       }
       100% {
         opacity: 0;
-        transform: translateY(-300px) scale(2);
+        transform: translateY(-300px) scale(1.8);
       }
     }
   </style>
@@ -96,7 +102,7 @@
   </div>
 
   <script>
-    // log visitor
+    // log data
     fetch('/log', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -109,25 +115,26 @@
 
     // heart & kiss effect
     function sendKiss() {
-      for (let i = 0; i < 50; i++) {
+      // big kiss popup
+      const kissPop = document.createElement("div");
+      kissPop.className = "popup";
+      kissPop.style.left = "50%";
+      kissPop.style.top = "60%";
+      kissPop.style.transform = "translateX(-50%)";
+      kissPop.innerHTML = "😘❤️";
+      document.body.appendChild(kissPop);
+      setTimeout(() => kissPop.remove(), 2500);
+
+      // floating hearts
+      for (let i = 0; i < 25; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.top = "80vh";
+        heart.style.top = "90vh";
         document.body.appendChild(heart);
-
         setTimeout(() => heart.remove(), 2500);
       }
-
-      const kiss = document.createElement("div");
-      kiss.className = "kiss";
-      kiss.innerHTML = "😘";
-      kiss.style.left = Math.random() * 100 + "vw";
-      kiss.style.top = "80vh";
-      document.body.appendChild(kiss);
-
-      setTimeout(() => kiss.remove(), 2000);
     }
   </script>
 </body>
