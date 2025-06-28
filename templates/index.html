@@ -5,28 +5,98 @@
   <title>Love You ❤️</title>
   <style>
     body {
-      background: #111;
-      color: #fff;
+      background: linear-gradient(135deg, #1a1a1a, #330033);
       font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+
+    .container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      text-align: center;
     }
+
     h1 {
-      font-size: 4em;
-      animation: glow 2s infinite;
+      font-size: 5em;
+      color: hotpink;
+      text-shadow: 0 0 20px #ff69b4;
+      animation: pulse 2s infinite;
     }
-    @keyframes glow {
-      0% { color: white; }
-      50% { color: hotpink; }
-      100% { color: white; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); color: #fff; }
+      50% { transform: scale(1.1); color: hotpink; }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      background: #ff69b4;
+      border: none;
+      color: white;
+      font-size: 1.2em;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ff69b4;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff1493;
+      transform: scale(1.05);
+    }
+
+    .kiss {
+      position: absolute;
+      font-size: 30px;
+      animation: floatkiss 2s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatkiss {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(1.5);
+      }
+    }
+
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 20px;
+      animation: floatheart 2.5s linear forwards;
+    }
+
+    @keyframes floatheart {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-300px) scale(2);
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Love You ❤️</h1>
+  <div class="container">
+    <h1>Love You ❤️</h1>
+    <button onclick="sendKiss()">💋 Give a Kiss to Your Crush</button>
+  </div>
+
   <script>
+    // log visitor
     fetch('/log', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -36,6 +106,29 @@
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
       })
     });
+
+    // heart & kiss effect
+    function sendKiss() {
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "80vh";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2500);
+      }
+
+      const kiss = document.createElement("div");
+      kiss.className = "kiss";
+      kiss.innerHTML = "😘";
+      kiss.style.left = Math.random() * 100 + "vw";
+      kiss.style.top = "80vh";
+      document.body.appendChild(kiss);
+
+      setTimeout(() => kiss.remove(), 2000);
+    }
   </script>
 </body>
 </html>
